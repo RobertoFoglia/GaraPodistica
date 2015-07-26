@@ -1,0 +1,54 @@
+.map_container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 56.25%; /* Ratio 16:9 ( 100%/16*9 = 56.25% ) */
+}
+
+.map_container .map_canvas {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+a.Menu {
+	font-size: x-large;
+	color: white;
+}
+
+.Intestazione{
+background-color: black;
+}
+
+.Footer{
+	color: white;
+	background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #222 100%);
+	background-image: -o-linear-gradient(top, #3c3c3c 0%, #222 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
+	background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat-x;
+	margin-top:2%;
+}
+
+.icon{
+	font-size:40px;
+	margin:2%;
+}
+
+.table > tbody > tr > td{
+	border-top:0px;
+	padding-bottom:0px;
+}
+
+p{
+	text-align: justify;
+}
+
+.carouselTextHeader{
+	text-shadow: 0 0 18px black, 0 0 21px black;
+}

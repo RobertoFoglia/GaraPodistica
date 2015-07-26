@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta content="IE=edge" http-equiv="X-UA-Compatible">
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<meta content="Sito per gara podistica a Giffoni Valle Piana" name="description">
+		<meta content="Roberto Foglia" name="author">
+		<title>Podista in corsa</title>
+		<link rel="icon" type="image/png"  href="/images/icona.png">
+		<!-- Bootstrap -->
+		<!-- Custom styles for this template -->
+		<link href="bootstrap/css/justified-nav.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+		<link href="bootstrap/css/carousel.css" rel="stylesheet">
+		<link href="css/stylesheets.css" rel="stylesheet">
+		<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+		<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+		<script src="bootstrap/js/ie-emulation-modes-warning.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<link href="css/personalCss.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/animate.css">
+		<!-- RIFERIMENTI GOOGLE MAPS -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+		<!-- /RIFERIMENTI GOOGLE MAPS -->
+		<script type="text/javascript" charset="utf-8">
+			var directionDisplay;
+			var directionDisplay2;
+			var directionsService = new google.maps.DirectionsService();
+			var directionsService2 = new google.maps.DirectionsService();
+			// @ parametri di percorso
+			var partenza = "Piazza Umberto I, 24, Mercato SA";
+			var arrivo = "Giffoni Valle Piana santa maria a Vico";
+			var map;
+			var map2;
+			var waypts = [];
+			waypts.push({
+				location : 'Via Fabrizio Mancusi, 32, 84095 Mercato SA',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Via Fabrizio Mancusi, 72, Mercato SA',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Giffoni Valle Piana via J. kennedy',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Via Murate, 93, 84095 Giffoni Valle Piana SA',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Via Murate, 101, 84095 Giffoni Valle Piana SA',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Via Serroni, 21, 84095 Mercato SA',
+				stopover : false
+			});
+			waypts.push({
+				location : 'Strada Provinciale 76, 4, 84095 Giffoni Valle Piana SA',
+				stopover : false
+			});
+
+			function initialize() {
+				calcolaPercorso();
+				directionsDisplay = new google.maps.DirectionsRenderer();
+				var myOptions = {
+					zoom : 14,
+					mapTypeId : google.maps.MapTypeId.HYBRID
+				};
+
+				map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+				directionsDisplay.setMap(map);
+
+				calcolaPercorso2();
+				directionsDisplay2 = new google.maps.DirectionsRenderer();
+				map2 = new google.maps.Map(document.getElementById("map-canvas2"), myOptions);
+				directionsDisplay2.setMap(map2);
+			}
+
+			function calcolaPercorso() {
+				var request = {
+					origin : partenza,
+					destination : arrivo,
+					waypoints : waypts,
+					travelMode : google.maps.DirectionsTravelMode.WALKING
+				};
+				directionsService.route(request, function(response, status) {
+					if (status == google.maps.DirectionsStatus.OK) {
+						directionsDisplay.setDirections(response);
+					}
+				});
+			}
+
+			function calcolaPercorso2() {
+				var request = {
+					origin : arrivo,
+					destination : partenza,
+					travelMode : google.maps.DirectionsTravelMode.DRIVING
+				};
+				directionsService2.route(request, function(response, status) {
+					if (status == google.maps.DirectionsStatus.OK) {
+						directionsDisplay2.setDirections(response);
+					}
+				});
+			}
+
+
+			window.onload = initialize;
+			function resizeWindow() {
+				if (this.resizeTO)
+					clearTimeout(this.resizeTO);
+				this.resizeTO = setTimeout(function() {
+					calcolaPercorso();
+					calcolaPercorso2();
+				}, 500);
+			}
+
+		</script>
+	</head>
+	<body onresize="resizeWindow();">
+		<div id="home" class="Intestazione">
+			<nav class="navbar navbar-inverse" style="margin-bottom:1px;">
+				<div class="container">
+					<div class="navbar-header">
+						<!-- <a class="navbar-brand" href="#"><img alt="Brand" src="..."> </a> -->
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand Menu" href="#home" style="color:white;font-weight:bold;">Gara podistica</a>
+					</div>
+					<div id="navbar" class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li class="active">
+								<a href="#home">Home</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true"> gara&nbsp;<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#gara">percorso</a>
+									</li>
+									<!--<li>
+									<a href="#">regolamento</a>
+									</li>
+									<li>
+									<a href="#">iscrizione</a>
+									</li> -->
+									<li>
+										<a href="#pianodiallenamento">piano di allenamento consigliato</a>
+									</li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Giffoni Valle Piana&nbsp;<span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li>
+										<a href="#giffonivallepiana">descrizione</a>
+									</li>
+									<li>
+										<a href="#comeraggiungerci">come raggiungerci</a>
+									</li>
+									<li>
+										<a href="#parcheggi">parcheggi</a>
+									</li>
+									<!--<li>
+									<a href="#dovemangiare">dove mangiare</a>
+									</li>
+									<li>
+									<a href="#dovepernottare">dove pernottare</a>
+									</li>-->
+								</ul>
+							</li>
+							<li>
+								<a href="#contatti">contatti</a>
+							</li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</nav>
+		</div>
+
+		<!-- @@@ HOME del sito -->
+		<div class="container">
+			<!-- CAROSELLO -->
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+					<li data-target="#myCarousel" data-slide-to="5"></li>
+				</ol>
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<img class="first-slide img-responsive" src="images/pasquale giannattasio/giannattasio1.png">
+						<div class="container">
+							<div class="carousel-caption carouselTextHeader">
+								<h1>5 settembre 2015
+								<br>
+								primo memorial
+								<br>
+								Pasquale Giannattasio</h1>
+								<p>
+									Gara podistica in memoria del grande campione di atletica giffonese
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img class="second-slide img-responsive" src="images/pasquale giannattasio/staffetta.jpg">
+						<div class="container">
+							<div class="carousel-caption carouselTextHeader">
+								<h1>5 settembre 2015
+								<br>
+								10 km in onore di Pasquale Giannattasio</h1>
+								<p>
+									Gara podistica di 10 km attraverso le bellissime strade di Giffoni Valle Piana
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img class="third-slide img-responsive" src="images/manifesto.png">
+						<div class="container"></div>
+					</div>
+					<div class="item">
+						<img class="fourth-slide img-responsive" src="images/percorso/fotoPercorsoVassi.png">
+						<div class="container">
+							<div class="carousel-caption carouselTextHeader">
+								<h1>5 settembre 2015
+								<br>
+								10 km in onore di Pasquale Giannattasio</h1>
+								<p>
+									Gara podistica di 10 km attraverso le bellissime strade di Giffoni Valle Piana
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img class="fourth-slide img-responsive" src="images/percorso/fotoOrnito.png">
+						<div class="container">
+							<div class="carousel-caption carouselTextHeader">
+								<h1>5 settembre 2015
+								<br>
+								10 km in onore di Pasquale Giannattasio</h1>
+								<p>
+									Gara podistica di 10 km attraverso le bellissime strade di Giffoni Valle Piana
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img class="fifth-slide img-responsive" src="images/percorso/fotoPercorsoVassi2.png">
+						<div class="container">
+							<div class="carousel-caption carouselTextHeader">
+								<h1>5 settembre 2015
+								<br>
+								10 km in onore di Pasquale Giannattasio</h1>
+								<p>
+									Gara podistica di 10 km attraverso le bellissime strade di Giffoni Valle Piana
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Precedente</span> </a>
+				<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Successivo</span> </a>
+			</div><!-- /.carousel -->
+			<!-- /CAROSELLO -->
+
+			<div class="container">
+				<hr class="featurette-divider">
+				<div class="row">
+					<div class="span6 col-sm-6 col-md-6 col-lg-6">
+						<h2 class="wow bounceInLeft">La vita del campione</h2>
+						<p class="text-danger wow bounceInLeft">
+							Biografia di Pasquale Giannattasio
+						</p>
+						<p class="wow fadeInLeft" align="justify">
+							Pasquale Giannattasio, è stato un atleta italiano, velocista delle Fiamme Gialle attivo negli anni '60.
+							Vinse tre titoli italiani consecutivi sui 100 metri dal 1965 al 1967, e uno in staffetta.
+							Sempre nel 1967 eguagliò il record italiano dei 100 metri di Livio Berruti, due volte nello stesso giorno, a Città del Messico,
+							con 10"26, risultato a tutt'oggi che lo vede all'ottavo posto nelle liste italiane di ogni tempo.
+							Giannattasio fu primatista italiano anche nella 4×100, nel 1964 in Francia. Ventidue volte azzurro, prese parte ai Giochi olimpici di Tokio,
+							dove fu settimo in finale nella 4×100 con Berruti, Ottolina e Preatoni.
+							Due anni dopo, agli Europei di Budapest, fu ottavo in finale nei 100 metri.
+						</p>
+						<p class="wow fadeInRight" align="justify">
+							Raggiunse un risultato ancora migliore nel 1967 ai Giochi europei indoor di Praga, vincendo il titolo continentale dei 50 metri.
+							Altri risultati di prestigio Giannattasio li ottenne ai Giochi del Mediterraneo: nel 1963 fu oro in staffetta, e nel 1967 ancora
+							primo nella 4×100 e secondo nei 100 metri. Terminata l'attività agonistica divenne tecnico, prima nel settore giovanile,
+							quindi seguendo i migliori velocisti delle Fiamme Gialle. Spesso amava trascorrere i suoi fine settimana a Giffoni Valle Piana,
+							tanto che gli stessi amministratori comunali volevano coinvolgerlo nell’ambito dello sport attraverso iniziative a favore dei giovani.
+							Fu interessato anche nel progetto Salernello, il centro sportivo che l’ex patron della Salernitana voleva costruire a Giffoni.
+							E proprio al comune per l’occasione si incontrò con un altro personaggio famoso del panorama dell’Atletica, Pietro Mennea,
+							detentore di grandi record, chiamato da Aliberti come consulente.
+						</p>
+						<p class="wow fadeInLeft" align="justify">
+							Nel 2003 gli è stato dedicato il nome dell'ex Stadio Stella Polare di Ostia,
+							dove giocano i Marines Lazio, il Rugby Ostia e una rappresentativa ostiense di atletica.
+							Nel 2008 è stata intitolata a suo nome la nuova tribuna coperta dello stadio comunale nella sua Giffoni Valle Piana.
+						</p>
+					</div>
+					<div class="span6 col-sm-6 col-md-6 col-lg-6 wow fadeInRight" style="vertical-align:middle;">
+						<img class="img-responsive img-rounded center-block" src="images/pasquale giannattasio/giannattasio con firma.jpg" style="max-height:600px;">
+					</div>
+				</div>
+				<!--
+				<hr class="featurette-divider">
+				<div class="row">
+				<div class="span12 col-sm-12 col-md-12 col-lg-12">
+				<h2>Descrizione evento</h2>
+				<p align="justify">
+				blalalabalbalbalbalablabalbalbalbalbalbalbalbalbalabalbalb
+				<br>
+				dlaskfjaljfalsjfalkjfalkjfalkjdfalkjflakjfdlakjflakjfla
+				</p>
+				</div>
+				</div>  -->
+			</div>
+		</div>
+		<!-- /HOME del sito -->
+
+		<!-- @@@ GARA del sito -->
+		<ol id="gara" class="breadcrumb wow bounceInLeft">
+			<li>
+				<a href="#home" style="color:#5A5A5A;">Home</a>
+			</li>
+			<li class="active">
+				gara
+			</li>
+		</ol>
+		<div class="container">
+			<div id="PERCORSO" class="row featurette">
+				<div class="col-md-5 col-sm-5 wow fadeInLeft">
+					<p>
+						<h3><b>Percorso</b></h3>
+					</p>
+					<p align="justify">
+						La gara inizia e termina in piazza Umberto I e si snoda per le strade principali di Giffoni Valle Piana. La prima parte del percorso
+						è lunga 6.4 Km ed è composta da tratti misti, in asfalto, prevalentemente in falsopiano, con un inizio in salita e un tratto finale in rettilineo piano.
+						Dinnanzi alla chiesa di S. Maria a Vico è prevista un'inversione di marcia che è l'inizio del secondo tratto.
+					</p>
+				</div>
+				<div class="col-md-7 col-sm-7" style="margin-bottom:30px">
+					<!-- GOOGLE MAPS -->
+					<div class="map_container wow fadeInRight">
+						<div id="map-canvas" class="map_canvas"></div>
+					</div>
+
+					<br>
+					<div class="wow fadeInLeft">
+						<button type="button" class="btn btn-warning" style="float:right;color:black;" onclick="calcolaPercorso()">
+							Resetta mappa
+						</button>
+					</div>
+					<br>
+				</div>
+				<div class="col-md-5 col-sm-5 wow fadeInLeft">
+					<p align="justify">
+						La seconda parte della gara è composta da una strada asfaltata in falsopiano, che taglia Giffoni Valle Piane, e termina con una leggera salita in piazza Umberto I.
+						Questo tratto è lungo 3.6 Km ed è il meno impegnetivo tra i due.
+					</p>
+				</div>
+				<div class="col-md-7 col-sm-7">
+					<!-- GOOGLE MAPS -->
+					<div class="map_container wow fadeInRight">
+						<div id="map-canvas2" class="map_canvas"></div>
+					</div>
+					<br>
+					<div class="wow fadeInLeft">
+						<button type="button" class="btn btn-warning" style="float:right;color:black;" onclick="calcolaPercorso2()">
+							Resetta mappa
+						</button>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-12 col-lg-12">
+					<br>
+					<br>
+					<div id="pannelliGara" class="container">
+						<div class="panel-group" id="accordionPannelliGara">
+							<div id="pianodiallenamento" class="panel panel-default wow bounceInRight">
+								<div class="panel-heading">
+									<span class="panel-title"> <a data-toggle="collapse" data-parent="#accordionPannelliGara" href="#collapsePannelliGara1" aria-expanded="false" class="collapsed"> <b>Piano di allenamento consigliato per 10 km</b></a> <span style="float:right;font-size:0.6em;">(premi sul titolo)</span> </span>
+								</div>
+								<div id="collapsePannelliGara1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+									<div class="panel-body">
+										<p>
+											Il presente piano di allenamento si riferisce ad atleti che hanno già un'autonomia di corsa di almeno 10 km ed è a carattere indicativo.
+										</p>
+										<ul>
+											<li>
+												<b>Domenica - lungo</b>
+												<br>
+												<p>
+													aumento da km 11 a km 15 (km 1 ogni due settimane)
+													ritmo del test sui km 3 + 60”
+													(percorso collinare con spinta potenziata in salita)
+												</p>
+											</li>
+											<li>
+												<b>Martedì - riscaldamento, esercizi di stiramento e allunghi</b>
+												<br>
+												<p>
+													ripetute miste<br>    
+													&nbsp;km 1&nbsp;&nbsp;&nbsp;&nbsp;ritmo: test + 5”&nbsp;&nbsp;&nbsp;(quattro prove) - recupero  3 minuti - 5”&nbsp;&nbsp;&nbsp;(quattro prove)<br>       
+                                                    &nbsp;km 0.5 ritmo: test + 10” (quattro prove) - recupero  2 minuti - 10” (quattro prove)<br>                                  
+                                                    defaticamento: corsa lenta minuti 10
+
+												</p>
+											</li>
+											<li>
+												<b>Giovedì - riscaldamento, esercizi di stiramento e allunghi</b>
+												<br>
+												<p>
+													medio: aumento progressivo da km 5 a 9 ( km 1 ogni due settimane)<br>                                     
+                                   					ritmo: test + 30”     
+												</p>
+											</li>
+											<li>
+												<b>Sabato - riscaldamento, esercizi di stiramento e allunghi</b>
+												<br>
+												<p>
+													fartlek: km 10 con alternanza di ritmo lento e veloce (m 300 + 300)<br>
+                                   					defaticamento: 10 minuti di corsa lenta    
+												</p>
+											</li>
+											<li>
+												<b>Domenica - lungo</b>
+												<br>
+												<p>
+													aumento progressivo  da  km 8  a km 12  (km 1 ogni due settimane )<br>
+                                  					dopo  km 2 di riscaldamento  ritmo test + 45“<br>         
+                                  					ultimi 5 km in  progressione<br>   
+                                 					(da effettuare  su  percorso  pianeggiante)     
+												</p>
+											</li>
+											<li>
+												<b>Martedì - riscaldamento, esercizi di stiramento e allunghi</b>
+												<br>
+												<p>
+													interval - training misto<br>
+                                  					n°10 x m 200 – recupero 90” poi a seguire km 5.0 al ritmo del medio<br>         
+                                  					defaticamento: corsa lenta minuti 10   
+												</p>
+											</li>
+											<li>
+												<b> Giovedì - progressivo</b>
+												<br>
+												<p>
+													km 10 di cui km 2.5 corsa lenta, km 5.0 media e km 2.5 veloce<br>         
+                                  					defaticamento: corsa lenta minuti 10   
+												</p>
+											</li>
+											<li>
+												<b> Sabato - riscaldamento, esercizi di stiramento e allunghi</b>
+												<br>
+												<p>
+													corto veloce: aumento progressivo da km 3  a  7 ( km 1.0 ogni  due settimane ) ritmo test + 10/15“<br>         
+                                  					defaticamento: corsa lenta minuti 10   
+												</p>
+											</li>
+										</ul>
+										<p>
+											Il lunedì, mercoledì e venerdì effettuare rispettivamente sedute di allungamento, elasticità e potenziamento.
+										</p>
+										<p>
+											N.B. (indicazioni valide per tutte le  fasi del programma di allenamento):
+											<ol>
+												<li>
+													altre eventuali sedute di allenamento per recupero attivo :  45 minuti  di  corsa lenta
+													<ul>
+														<li>
+															eventuali allenamenti non effettuati non vanno recuperati ed il programma  può proseguire come
+															previsto<br>
+														</li>
+														<li>
+															nell’ipotesi che si effettui qualche allenamento, diverso da quello previsto, che comporti  un
+													notevole impegno, evitare l’esecuzione  di successivi  lavori lattacidi (tali lavori vanno sempre
+													alternati con allenamenti aerobici)
+														</li>
+													</ul>	
+													
+												</li>
+												<li>
+													in caso di gara prevista per la domenica sostituire l’allenamento del giovedì e del sabato con 60 e 30 minuti di corsa
+													lenta. Tale allenamento di scarico va ripetuto anche il successivo martedì
+													(Attenzione! Chi partecipa a gare deve recuperare la mancata progressione del carico)
+												</li>
+												<li>
+													a fine luglio ripetere il test di km 3 e valutare se è necessario rimodulare il carico sotto l' aspetto intensivo.
+												</li>
+											</ol>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- @@@ /GARA del sito -->
+
+		<!-- @@@ GIFFONI VALLE PIANA del sito -->
+		<ol id="giffonivallepiana" class="breadcrumb wow bounceInLeft">
+			<li>
+				<a href="#home" style="color:#5A5A5A;">Home</a>
+			</li>
+			<li class="active">
+				Giffoni Valle Piana
+			</li>
+		</ol>
+		<div id="descrizioneGiffoni" class="container wow fadeInLeft">
+			<div class="col-sm-12 col-md-12 col-lg-12" align="center">
+				<p>
+					Giffoni Valle Piana sorge alle falde del monte Licinici e ospita la sorgente del Picentino e la vetta del Monte Acellica.
+					Inoltre è il capoluogo della Comunità Montana Monti Picentini e sul suo territorio si estende l'omonimo parco.
+					<br>
+					Il luogo offre numerosi vantaggi, come il silenzio, la pace, la mitezza del clima, la salubrità dell’aria, la purezza e freschezza delle acque.
+					Il suo territorio rappresenta grande varietà; spazia da montagne a collina, da valle ad aperta pianura.
+				</p>
+			</div>
+			<div class="col-sm-6 col-md-6 col-lg-6 wow fadeInLeft" align="center" style="margin-bottom:10px;">
+				<img class="img-responsive img-rounded img-thumbnail" src="images/giffoni/panoramicaDaMontagna.jpg" style="max-height:350px;">
+			</div>
+			<div class="col-sm-6 col-md-6 col-lg-6 wow bounceInRight" align="center" style="margin-bottom:10px;">
+				<img class="img-responsive img-rounded img-thumbnail" src="images/giffoni/giffonidall'alto.jpg" style="max-height:350px;">
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-12 wow fadeInLeft">
+				<p>
+					Giffoni è un paese dinamico e pieno di vitalità: la popolazione è dedita all’agricoltura, ma non mancano piccole industrie di laterizi,
+					la lavorazione del legno, di materassi, di dolci e piccoli artigiani che si dedicano alla lavorazione del rame e del ferro.
+					<br>
+					Giffoni è una città ricca di storia, di vestigia antiche, di leggende, di mistero, che ancora riesce a salvare il fascino e la semplicità dei tempi passati.
+					Da reperti archeologici rinvenuti, si ricavano interessanti prove delle evoluzioni umane nella zona in cui trattasi che è stata sede di numerevoli generazioni di uomini: Italici, Ausoni, Sabelli, Osci, colonizzati in epoca storica da Etruschi, Greci e Romani.
+				</p>
+			</div>
+		</div>
+		<div id="pannelligiffoni" class="container">
+			<div class="panel-group" id="accordion">
+				<div id="comeraggiungerci" class="panel panel-default wow bounceInRight">
+					<div class="panel-heading">
+						<span class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="false" class="collapsed"> <b>Come raggiungerci</b></a> <span style="float:right;font-size:0.6em;">(premi sul titolo)</span> </span>
+					</div>
+					<div id="collapse1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<p align="justify">
+								<h4>In Auto</h4>
+								<strong>Per chi viene da Nord:</strong> Autostrada Roma - Caserta (A30) o Autostrada Napoli - Salerno (A3), Tangenziale di Salerno ingresso Fratte, uscita Zona Industriale, strada provinciale da Fuorni per Giffoni Valle Piana.
+							</p>
+							<p align="justify">
+								<strong>Per chi viene da Sud:</strong><span style="line-height: 1.3em;"> Autostrada Salerno - Reggio Calabria, uscita Pontecagnano, strada provinciale da Fuorni per Giffoni Valle Piana.</span>
+							</p>
+							<p align="justify">
+								<h4>In treno</h4>
+								La stazione ferroviaria più vicina è Salerno, un comodo servizio pubblico, la <a href="http://www.sitasudtrasporti.it" target="_blank">SITA</a>, collega il capoluogo al paese.
+							</p>
+							<p align="justify">
+								<h4>In aereo</h4>
+								L'aeroporto più vicino è l' Aeroporto Salerno Costa d'Amalfi (Pontecagnano ) a 20 Km
+								<br>
+								<strong>Napoli</strong>: Capodichino, 70 km.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="cosavisitare" class="panel panel-default wow bounceInLeft">
+					<div class="panel-heading">
+						<span class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="false" class="collapsed"> <b>Monumenti e luoghi d'interesse</b></a> </span>
+					</div>
+					<div id="collapse5" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body container-fluid">
+							<div class="row">
+								<div class="span6 col-md-6 wow fadeInLeft">
+									<p>
+										<b>La Chiesa madre della SS. Annunziata.</b>
+										<br>
+										E' da vari secoli il luogo cardine della spiritualità Giffonese.
+										Presenta al visitatore un rivestimento in stile Barocco con un altare maggiore è rivestito di marmo policromo, in alto vi è una nicchia con un gruppo ligneo della Val Cardena, raffigurante l'Annunciazione.
+										Il cielo della navata presenta una tela di 24 mq., che raffigura "L'Angelo che scende dal cielo e la Madonna che lo aspetta con fiducia",opera di un artista locale, V. Stavolone.
+										Ai lati della navata centrale vi sono 14 tele, che rappresentano le varie stazioni della via Crucis, risalenti al XVII sec., di scuola tedesca, appartenute al grande musicista Johann Strauss e donate alla parrocchia da un ingegnere della bavaria.
+										Nella stessa navata, vi è un pulpito ligneo del 1700, lavorato e cesellato. Nella navata sinistra vi è una tavola del 500, raffigurante la Madonna del Carmine con le anime del Purgatorio e due guerrieri, l'altare sottostante custodisce una teca
+										contenente la Sacra Spina. Uscendo dalla porticina laterale della navata destra,sulla sinistra si intravede, dietro il cancello a pianterreno, la residenza dell'ex ospedale, sopra il quale vi è la cappella dell'Immacolata Concezione, sede della
+										Confraternita di Maria SS. Immacolata, fondata l'11 dicembre 1621 ed approvata dall'Ecc.mo D. Lucido Cardinale San Severino Arcivescovo di Salerno".
+									</p>
+								</div>
+								<div class="span6 col-md-6 wow fadeInRight" align="center" style="margin-bottom:20px;">
+									<img class="img-responsive img-rounded center-block" src="images/giffoni/Giffoni_VP_chiesa_ss.annunziata.JPG">
+								</div>
+							</div>
+							<div class="row">
+								<div class="span6 col-md-6 wow fadeInLeft">
+									<p>
+										<b>Il convento di San Francesco.</b>
+										<br>
+										Il trecentesco convento di San Francesco, edificato ai piedi della collina di Terravecchia,in cui sono conservati dipinti che rilevano i caratteri dello stile giottesco. Il complesso conventuale è il fiore all’occhiello del paese, sia dal punto di vista storico che artistico. Lo stile gotico francescano,
+										con architettura essenziale, caratterizza la struttura del convento che si sviluppa a pianta quadrata su due livelli intorno al chiostro ogivale.
+										Affreschi di notevole interesse adornano le pareti : a secondo piano troviamo i frammenti di una raffigurazione del Cristo deposto dalla Croce,
+										risalente al XV sec., mentre nelle lunette del portico troviamo raffigurate scene di vita di S.Francesco. All’ ingresso troviamo delle raffigurazioni
+										che risalgono al ‘600 poste una di fronte all’altra che rappresentano immagini di Giffoni. In una sala al primo piano vi è un affresco che risale al 1560
+										raffigurante la resurrezione di Cristo.
+										<br>
+										Addossata al lato nord del Chiostro, fu edificata la Chiesa ad una sola navata con transetto ed abside. Essa era dedicata alla Sacra Spina,
+										custodita e venerata al suo interno per ben quattro secoli, fino all’anno 1806 quando il Convento
+										e la chiesa vennero soppressi dalle leggi e dai decreti napoleonici che ordinavano la soppressione degli ordini monastici
+										<br>
+										i elevato pregio artistico sono anche gli affreschi della chiesa,che rappresentano la vita di Cristo e soggetti sarcri. Tra tutti primeggia l’ affresco trcentesco raffigurante S. Francesco in trono.
+										Ciò che richiama l’attenzione del visitatore è il campanile struttura in piperno di stile romanico a pianta quadrata.
+									</p>
+								</div>
+								<div class="span6 col-md-6 wow fadeInRight" align="center" style="margin-bottom:20px;">
+									<img class="img-responsive img-rounded center-block" src="images/giffoni/Il-Convento-di-San-Francesco.jpg">
+								</div>
+							</div>
+							<div class="row">
+								<div class="span6 col-md-6 wow fadeInLeft">
+									<p>
+										<b>Il santuario di Santa Maria di Carbonara.</b>
+										<br>
+										Sorge lontano dall’ abitato di Curti a circa 3 Km, ed è uno dei 4 conventi Serviti (Servi di Maria) della Provincia di Salerno.
+										La costruzione del eremo è da ipotizzare intorno all’anno mille, supposizione che nasce a seguito di una leggenda giffonese circa
+										un quadro trovato da un carbonaio, in un luogo scosceso del monte Lieggio. , che sovrasta la località di Carbonara. Il dipinto fu portato da questi in Curti ed il popolo
+										decise di innalzare un tempio in onore alla Madonna raffigurata nel quadro nei pressi del luogo di ritrovamento.
+										Iniziati i lavori di edificazione del tempio, sempre secondo la leggenda, i muratori, una mattina, andando al lavoro, trovarono
+										le fondamenta miracolosamente trasportate nell'attuale sito.
+									</p>
+								</div>
+								<div class="span6 col-md-6 wow fadeInRight" align="center" style="margin-bottom:20px;">
+									<img class="img-responsive img-rounded center-block" src="images/giffoni/carbonara.jpg">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="span6 col-md-6 wow fadeInLeft">
+									<p>
+										<b>Borgo medievale di Terravecchia.</b>
+										<br>
+										unitamente al castello,rappresenta un complesso di rilevante importanza storico-culturale-architettonica, e può rientrare a pieno titolo,
+										dopo l'attento e accurato recupero,
+										tra i borghi medievali più belli d'Italia.
+									</p>
+								</div>
+								<div class="span6 col-md-6 wow fadeInRight" align="center" style="margin-bottom:20px;">
+									<img class="img-responsive img-rounded center-block" src="images/giffoni/terravecchia.jpg">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="span6 col-md-6 wow fadeInLeft">
+									<p>
+										<b>La chiesa di Santa Maria a Vico.</b>
+										<br>
+										Il tempio a lungo è stato identificato con quello dedicato a Giunone Argiva poi ritrovato alle foci del Sele,
+										costruito da Giasone mentre errava la conquista del Vello d’oro. Nei primi secoli del Cristianesimo questo tempio venne dedicato alla Vergine
+										Maria(alla denominazione S. Maria è stato aggiunto “ A Vico”, poiché il tempio, che nella distruzione di Picenza fu risparmiato,
+										si venne a trovare al centro di uno dei tanti vici o villaggi, ove furono costretti ad abitare i Picentini.)
+									</p>
+
+								</div>
+								<div class="span6 col-md-6 wow fadeInRight" align="center" style="margin-bottom:20px;">
+									<img class="img-responsive img-rounded center-block" src="images/giffoni/giffoni_nuova_chiesa_santamaria_a_vico.png">
+								</div>
+							</div>
+							<div class="row">
+								<div class="span12 col-md-12 wow fadeInRight">
+									<a class="btn btn-primary" href="http://www.comune.giffonivallepiana.sa.it/" target="_blank" role="button">E altro ancora... </a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="parcheggi" class="panel panel-default wow bounceInRight">
+					<div class="panel-heading">
+						<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="collapsed" aria-expanded="false"> <b>Parcheggi</b></a></h4>
+					</div>
+					<div id="collapse2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							Sono disponibili ampi parcheggi per posteggiare con sicurezza le auto.
+							<br>
+							Quelli più vicini alla partenza sono:
+							<br>
+							<div style="margin-left:2%;">
+								- via Adua, 10
+								<br>
+								- via Corte, 47
+								<br>
+								- piazza fratelli Lumier
+								<br>
+								- via Generoso Andria, 48
+								<br>
+								- via Cenere, 2
+								<br>
+								- via Via Aldo Moro, 31 (Cittadella del cinema).
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--	<div id="dovemangiare" class="panel panel-default wow bounceInLeft" style="display: none;">
+				<div class="panel-heading">
+				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="collapsed" aria-expanded="false"> <b>Dove mangiare</b></a></h4>
+				</div>
+				<div id="collapse3" class="panel-collapse collapse" aria-expanded="false" >
+				<div class="panel-body">
+				<p align="justify">
+				gnam gnam
+				</p>
+				<a class="btn btn-primary" target="_blank" href="http://www.comune.giffonivallepiana.sa.it/index.php?option=com_content&view=article&id=95&Itemid=102" role="button">Per saperne di più</a>
+				</div>
+				</div>
+				</div>
+				<div id="dovepernottare" class="panel panel-default wow bounceInRight" style="display: none;">
+				<div class="panel-heading">
+				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse4" class="collapsed" aria-expanded="false"> <b>Dove pernottare</b> </a></h4>
+				</div>
+				<div id="collapse4" class="panel-collapse collapse" aria-expanded="false">
+				<div class="panel-body">
+				<p align="justify">
+				Sono disponibili ampi parcheggi per posteggiare con sicurezza le auto.
+				</p>
+				<a class="btn btn-primary" target="_blank" href="http://www.comune.giffonivallepiana.sa.it/index.php?option=com_content&view=article&id=96&Itemid=103" role="button">Per saperne di più</a>
+				</div>
+				</div>
+				</div>
+				-->
+
+			</div>
+		</div>
+		<!-- @@@ / GIFFONI VALLE PIANA del sito -->
+		<!-- FOOTER -->
+		<div id="FOOTER" class="Footer">
+			<div id="contatti" class="container wow bounceInRight">
+				<br>
+				<p style="text-align: center;">
+					<span class="symbol icon"> <a href="https://www.facebook.com/groups/459485634218500/?fref=ts" target="_blank" style="color:white;">facebook</a> </span>
+					<span class="symbol icon"> <a href="https://plus.google.com/u/0/101889671722588553971/posts" target="_blank" style="color:white;">googleplus</a> </span>
+					<span class="symbol icon"> <a href="https://twitter.com/GaraPodistiGVP" target="_blank" style="color:white;">twitterbird</a> </span>
+					<span class="symbol icon"> <a href="mailto:podistaincorsa@gmail.com" style="color:white;">email</a> </span>
+				</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>LINK UTILI</th>
+							<th>PROFILI FACEBOOK</th>
+							<th>N° DI TELEFONO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><a href="http://www.garepodistiche.com/" target="_blank" style="color:white;">Iscrizione gare podistiche</a></td>
+							<td><a href="https://www.facebook.com/pages/Comune-di-Giffoni-Valle-Piana-SA/41928528082" target="_blank" style="color:white;">Giffoni Valle Piana</a></td>
+							<td>Antonio Andria +39 3930370082</td>
+						</tr>
+						<tr>
+							<td><a href="http://www.comune.giffonivallepiana.sa.it/" target="_blank" style="color:white;">Sito ufficiale di Giffoni Valle Piana</a></td>
+						</tr>
+						<tr>
+							<td><a href="http://www.giffonifilmfestival.it/" target="_blank" style="color:white;">Giffoni Film Festival</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<footer>
+					<br>
+					<div align="right" style="margin-bottom:30px;">
+						Designed by Roberto Foglia
+						<span style="font-size: 1.5em;"> &nbsp;<span class="symbol"> <a href="https://www.facebook.com/FogliaRoberto87" target="_blank">facebook</a> </span> &nbsp;<span class="symbol"> <a href="https://plus.google.com/+RobertoFoglia_di_Giffoni_Valle_Piana/posts" target="_blank" style="color:red;">googleplus</a> </span> &nbsp;<span class="symbol"> <a href="mailto:fogliaroberto87@gmail.com" style="color:green;">email</a> </span> </span>
+					</div>
+				</footer>
+			</div>
+		</div>
+
+		<!-- /container -->
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
+		<script src="bootstrap/js/transition.js"></script>
+		<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+		<script src="bootstrap/js/holder.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="bootstrap/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="js/wow.min.js"></script>
+		<script>
+			if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				// some code..
+			} else {
+				new WOW().init();
+			}
+		</script>
+
+	</body>
+</html>
