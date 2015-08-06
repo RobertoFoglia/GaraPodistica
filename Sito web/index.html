@@ -31,100 +31,33 @@
 	src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 <!-- /RIFERIMENTI GOOGLE MAPS -->
 <script type="text/javascript" charset="utf-8">
-	var directionDisplay;
-	var directionDisplay2;
-	var directionsService = new google.maps.DirectionsService();
-	var directionsService2 = new google.maps.DirectionsService();
-	// @ parametri di percorso
-	var partenza = "Piazza Umberto I, 24, Mercato SA";
-	var arrivo = "Giffoni Valle Piana santa maria a Vico";
-	var map;
-	var map2;
-	var waypts = [];
-	waypts.push({
-		location : 'Via Fabrizio Mancusi, 32, 84095 Mercato SA',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Via Fabrizio Mancusi, 72, Mercato SA',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Giffoni Valle Piana via J. kennedy',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Via Murate, 93, 84095 Giffoni Valle Piana SA',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Via Murate, 101, 84095 Giffoni Valle Piana SA',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Via Serroni, 21, 84095 Mercato SA',
-		stopover : false
-	});
-	waypts.push({
-		location : 'Strada Provinciale 76, 4, 84095 Giffoni Valle Piana SA',
-		stopover : false
-	});
-
-	function initialize() {
-		calcolaPercorso();
-		directionsDisplay = new google.maps.DirectionsRenderer();
-		var myOptions = {
-			zoom : 14,
-			mapTypeId : google.maps.MapTypeId.HYBRID
-		};
-
-		map = new google.maps.Map(document.getElementById("map-canvas"),
-				myOptions);
-		directionsDisplay.setMap(map);
-
-		calcolaPercorso2();
-		directionsDisplay2 = new google.maps.DirectionsRenderer();
-		map2 = new google.maps.Map(document.getElementById("map-canvas2"),
-				myOptions);
-		directionsDisplay2.setMap(map2);
-	}
-
-	function calcolaPercorso() {
-		var request = {
-			origin : partenza,
-			destination : arrivo,
-			waypoints : waypts,
-			travelMode : google.maps.DirectionsTravelMode.WALKING
-		};
-		directionsService.route(request, function(response, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay.setDirections(response);
-			}
-		});
-	}
-
-	function calcolaPercorso2() {
-		var request = {
-			origin : arrivo,
-			destination : partenza,
-			travelMode : google.maps.DirectionsTravelMode.DRIVING
-		};
-		directionsService2.route(request, function(response, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay2.setDirections(response);
-			}
-		});
-	}
-
-	window.onload = initialize;
 	function resizeWindow() {
 		if (this.resizeTO)
 			clearTimeout(this.resizeTO);
 		this.resizeTO = setTimeout(function() {
-			calcolaPercorso();
-			calcolaPercorso2();
+			initialize();
 		}, 500);
 	}
+
+	function initialize() {
+		var giffoniVP = new google.maps.LatLng(40.716039, 14.941328);
+		var mapOptions = {
+			zoom : 1,
+			center : giffoniVP,
+			mapTypeId : google.maps.MapTypeId.HYBRID
+		}
+
+		var map = new google.maps.Map(document.getElementById('map-canvas'),
+				mapOptions);
+
+		var ctaLayer = new google.maps.KmlLayer(
+				{
+					url : 'https://dl.dropboxusercontent.com/u/23186631/runtastic_20150723_0640_Corsa.kml'
+				});
+		ctaLayer.setMap(map);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body onresize="resizeWindow();">
@@ -153,7 +86,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#gara">percorso</a></li>
 								<li><a href="#regolamento">regolamento</a></li>
-								<li><a href="#guidaIscrizione">iscrizione</a></li>
+								<li><a href="#guidaIscrizione">guida all'iscrizione</a></li>
 								<li><a href="#premiazione">premiazione</a></li>
 								<li><a href="#pianodiallenamento">piano di allenamento
 										consigliato</a></li>
@@ -364,11 +297,13 @@
 
 				<p align="justify">La gara inizia e termina in piazza Umberto I
 					e si snoda per le strade principali di Giffoni Valle Piana. La
-					prima parte del percorso è lunga 6.4 Km ed è composta da tratti
+					prima parte del percorso è composta da tratti
 					misti, in asfalto, prevalentemente in falsopiano, con un inizio in
-					salita e un tratto finale in rettilineo piano. Dinnanzi alla chiesa
-					di S. Maria a Vico è prevista un'inversione di marcia che è
-					l'inizio del secondo tratto.</p>
+					salita e un tratto finale in rettilineo piano.</p>
+				<p align="justify">La seconda parte della gara è composta da una
+					strada asfaltata in falsopiano, che taglia Giffoni Valle Piane, e
+					termina con una leggera salita in piazza Umberto I. Questo tratto
+					è il meno impegnetivo tra i due.</p>
 			</div>
 			<div class="col-md-7 col-sm-7" style="margin-bottom: 30px">
 				<!-- GOOGLE MAPS -->
@@ -378,30 +313,18 @@
 
 				<br>
 				<div class="wow fadeInLeft">
-					<button type="button" class="btn btn-warning"
-						style="float: right; color: black;" onclick="calcolaPercorso()">
-						Resetta mappa</button>
+					<a class="btn btn-primary"
+						target="_blank"
+						href="https://www.runtastic.com/en/users/antonio-andria-2/sport-sessions/516358603"
+						style="float: left;">
+						Dettagli Runtastic</a>
 				</div>
-				<br>
-			</div>
-			<div class="col-md-5 col-sm-5 wow fadeInLeft">
-				<p align="justify">La seconda parte della gara è composta da una
-					strada asfaltata in falsopiano, che taglia Giffoni Valle Piane, e
-					termina con una leggera salita in piazza Umberto I. Questo tratto è
-					lungo 3.6 Km ed è il meno impegnetivo tra i due.</p>
-			</div>
-			<div class="col-md-7 col-sm-7">
-				<!-- GOOGLE MAPS -->
-				<div class="map_container wow fadeInRight">
-					<div id="map-canvas2" class="map_canvas"></div>
-				</div>
-				<br>
 				<div class="wow fadeInLeft">
 					<button type="button" class="btn btn-warning"
-						style="float: right; color: black;" onclick="calcolaPercorso2()">
+						style="float: right; color: black;" onclick="initialize();">
 						Resetta mappa</button>
 				</div>
-				<br> <br> <br>
+				<br>
 			</div>
 
 			<div id="pannelliGara"
@@ -470,10 +393,11 @@
 									percorso (al km 5 e all’arrivo).
 								</p>
 								<p>
-									CRONOMETRAGGIO<br> Il cronometraggio è a cura di
-									<a href="www.garepodistiche.com">www.garepodistiche.com</a> a mezzo barcode cosa per cui è
-									assolutamente vietato manomettere il pettorale ricevuto al
-									momento del pagamento della quota di iscrizione.
+									CRONOMETRAGGIO<br> Il cronometraggio è a cura di <a
+										href="www.garepodistiche.com">www.garepodistiche.com</a> a
+									mezzo barcode cosa per cui è assolutamente vietato manomettere
+									il pettorale ricevuto al momento del pagamento della quota di
+									iscrizione.
 								</p>
 
 
@@ -489,13 +413,15 @@
 								regolamento in qualunque momento per motivi che riterrà
 								opportuni per una migliore organizzazione della gara. Eventuali
 								modifiche a servizi, luoghi ed orari saranno opportunamente
-								riportate sui siti internet <a href="www.podistaincorsa.altervista.org">www.podistaincorsa.altervista.org</a> e
-								<a href="www.garepodistiche.com">www.garepodistiche.com</a>.
+								riportate sui siti internet <a
+									href="www.podistaincorsa.altervista.org">www.podistaincorsa.altervista.org</a>
+								e <a href="www.garepodistiche.com">www.garepodistiche.com</a>.
 							</div>
 						</div>
 					</div>
 
-					<div id="guidaIscrizione" class="panel panel-default wow bounceInLeft">
+					<div id="guidaIscrizione"
+						class="panel panel-default wow bounceInLeft">
 						<div class="panel-heading">
 							<span class="panel-title"> <a data-toggle="collapse"
 								data-parent="#accordionPannelliGara"
@@ -511,10 +437,9 @@
 									atleti legati a società</p>
 								L'iscrizione è permessa esclusivamente tramite il sito web <a
 									href="http://giffoni-valle-piana-2015.garepodistiche.com/regolamentosmry.php"
-									target="_blank">http://www.garepodistiche.com/</a>
-								dal 28 agosto 2015 ore 13 al 04 settembre 2015 ore 13.<br>
-								Sarà possibile verificare la propria iscrizione on-line.<br>
-								<br>
+									target="_blank">http://www.garepodistiche.com/</a> dal 28
+								agosto 2015 ore 13 al 04 settembre 2015 ore 13.<br> Sarà
+								possibile verificare la propria iscrizione on-line.<br> <br>
 								<p style="font-weight: bold;">Modalità d'iscrizione per gli
 									atleti non appartenenti a società</p>
 								L’iscrizione va fatta in Piazza Umberto I (presso Bottega del
@@ -522,8 +447,7 @@
 								alle ore 17; consegnando in originale il certificato medico di
 								tipo agonistico per l’atletica leggera. In casi particolari si
 								accetteranno iscrizioni il pomeriggio della gara entro 30 minuti
-								dalla partenza. <br>
-								<br>
+								dalla partenza. <br> <br>
 								<p style="font-weight: bold;">Quota di iscrizione</p>
 								La quota di iscrizione è di 8 € e comprende:
 								<ul>
@@ -610,7 +534,8 @@
 						</div>
 					</div>
 
-					<div id="pianodiallenamento" class="panel panel-default wow bounceInLeft">
+					<div id="pianodiallenamento"
+						class="panel panel-default wow bounceInLeft">
 						<div class="panel-heading">
 							<span class="panel-title"> <a data-toggle="collapse"
 								data-parent="#accordionPannelliGara"
