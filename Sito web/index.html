@@ -56,8 +56,12 @@
 				});
 		ctaLayer.setMap(map);
 	}
-
 	google.maps.event.addDomListener(window, 'load', initialize);
+
+	function openClosePanel(idPanel) {
+		/* 		var panelContainer = document.getElementById(idPanel);
+		 panelContainer.click(); */
+	}
 </script>
 </head>
 <body onresize="resizeWindow();">
@@ -85,11 +89,17 @@
 						</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#gara">percorso</a></li>
-								<li><a href="#regolamento">regolamento</a></li>
-								<li><a href="#guidaIscrizione">guida all'iscrizione</a></li>
-								<li><a href="#premiazione">premiazione</a></li>
-								<li><a href="#pianodiallenamento">piano di allenamento
-										consigliato</a></li>
+								<li><a href="#regolamento"
+									onclick="openClosePanel('textRegolamento')">regolamento e
+										informazioni utili</a></li>
+								<li><a href="#guidaIscrizione"
+									onclick="openClosePanel('textGuidaIscrizione')">guida
+										all'iscrizione</a></li>
+								<li><a href="#premiazione"
+									onclick="openClosePanel('textPremiazione')">premiazione</a></li>
+								<li><a href="#pianodiallenamento"
+									onclick="openClosePanel('textPianoDiAllenamento')">piano di
+										allenamento consigliato</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" role="button" aria-expanded="false">
@@ -297,13 +307,13 @@
 
 				<p align="justify">La gara inizia e termina in piazza Umberto I
 					e si snoda per le strade principali di Giffoni Valle Piana. La
-					prima parte del percorso è composta da tratti
-					misti, in asfalto, prevalentemente in falsopiano, con un inizio in
-					salita e un tratto finale in rettilineo piano.</p>
+					prima parte del percorso è composta da tratti misti, in asfalto,
+					prevalentemente in falsopiano, con un inizio in salita e un tratto
+					finale in rettilineo piano.</p>
 				<p align="justify">La seconda parte della gara è composta da una
 					strada asfaltata in falsopiano, che taglia Giffoni Valle Piane, e
-					termina con una leggera salita in piazza Umberto I. Questo tratto
-					è il meno impegnetivo tra i due.</p>
+					termina con una leggera salita in piazza Umberto I. Questo tratto è
+					il meno impegnetivo tra i due.</p>
 			</div>
 			<div class="col-md-7 col-sm-7" style="margin-bottom: 30px">
 				<!-- GOOGLE MAPS -->
@@ -313,11 +323,9 @@
 
 				<br>
 				<div class="wow fadeInLeft">
-					<a class="btn btn-primary"
-						target="_blank"
+					<a class="btn btn-primary" target="_blank"
 						href="https://www.runtastic.com/en/users/antonio-andria-2/sport-sessions/516358603"
-						style="float: left;">
-						Dettagli Runtastic</a>
+						style="float: left;"> Dettagli Runtastic</a>
 				</div>
 				<div class="wow fadeInLeft">
 					<button type="button" class="btn btn-warning"
@@ -333,8 +341,8 @@
 
 					<div id="regolamento" class="panel panel-default wow bounceInRight">
 						<div class="panel-heading">
-							<span class="panel-title"> <a data-toggle="collapse"
-								data-parent="#accordionPannelliGara"
+							<span class="panel-title"> <a id="textRegolamento"
+								data-toggle="collapse" data-parent="#accordionPannelliGara"
 								href="#collapsePannelliGara2" aria-expanded="false"
 								class="collapsed"> <b>Regolamento e informazioni utili</b></a> <span
 								style="float: right; font-size: 0.6em;">(premi sul
@@ -423,8 +431,8 @@
 					<div id="guidaIscrizione"
 						class="panel panel-default wow bounceInLeft">
 						<div class="panel-heading">
-							<span class="panel-title"> <a data-toggle="collapse"
-								data-parent="#accordionPannelliGara"
+							<span class="panel-title"> <a id="textGuidaIscrizione"
+								data-toggle="collapse" data-parent="#accordionPannelliGara"
 								href="#collapsePannelliGara3" aria-expanded="false"
 								class="collapsed"> <b>Guida all'iscrizione</b></a> <span
 								style="float: right; font-size: 0.6em;"></span>
@@ -467,8 +475,8 @@
 
 					<div id="premiazione" class="panel panel-default wow bounceInRight">
 						<div class="panel-heading">
-							<span class="panel-title"> <a data-toggle="collapse"
-								data-parent="#accordionPannelliGara"
+							<span class="panel-title"> <a id="textPremiazione"
+								data-toggle="collapse" data-parent="#accordionPannelliGara"
 								href="#collapsePannelliGara4" aria-expanded="false"
 								class="collapsed"> <b>Premiazioni</b></a> <span
 								style="float: right; font-size: 0.6em;"></span>
@@ -537,8 +545,8 @@
 					<div id="pianodiallenamento"
 						class="panel panel-default wow bounceInLeft">
 						<div class="panel-heading">
-							<span class="panel-title"> <a data-toggle="collapse"
-								data-parent="#accordionPannelliGara"
+							<span class="panel-title"> <a id="textPianoDiAllenamento"
+								data-toggle="collapse" data-parent="#accordionPannelliGara"
 								href="#collapsePannelliGara1" aria-expanded="false"
 								class="collapsed"> <b>Piano di allenamento consigliato
 										per 10 km</b></a> <span style="float: right; font-size: 0.6em;"></span>
